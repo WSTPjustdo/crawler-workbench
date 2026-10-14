@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>拾线 · 本地线索探索台</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+<aside class="sidebar">
+  <a class="brand" href="/"><span class="brand-icon">拾</span><span>拾线 <small>OPPORTUNITY EXPLORER</small></span></a>
+  <div class="space-label">个人工作空间 <span>LOCAL</span></div>
+  <nav aria-label="主导航"><button class="nav active" data-page="jobs"><span>◈</span> 岗位清单 <b id="nav-count">—</b></button><button class="nav" data-page="notes"><span>▤</span> 原始帖子</button><button class="nav" data-page="crawl"><span>⌕</span> 新建搜索</button><button class="nav" data-page="xianyu"><span>◉</span> 闲鱼需求</button></nav>
+  <div class="side-note"><span class="dot"></span> 本地运行<small>数据保存在你的电脑<br>小红书与闲鱼 · 独立采集</small></div>
+</aside>
+<main>
+  <header class="topbar"><span>工作空间 <i>/</i> <strong id="breadcrumb">岗位清单</strong></span><span class="local-badge"><span class="dot"></span> 本地服务</span></header>
+  <div class="content">
+    <div id="notice" class="notice" role="alert" hidden></div>
+    <section id="page-jobs" class="page">
+      <div class="heading"><div><div class="eyebrow">AI CAREER RADAR</div><h1>找到你的下一段 AI 实习<span>。</span></h1><p>从企业 Agent 到工作流交付，让搜索更接近你想做的事。</p></div><button class="primary" id="new-search">＋ 新建搜索</button></div>
+      <div class="stats"><div><span>已采集帖子</span><strong id="notes-count">—</strong><small>三组初始搜索 · 持续积累</small></div><div><span>精选岗位与线索</span><strong id="jobs-count">—</strong><small>根据招聘文本人工整理</small></div><div><span>支持远程的条目</span><strong id="remote-count">—</strong><small>含待核实的小红书线索</small></div><div class="focus-stat"><span>本次关注方向</span><strong>企业 AI 落地</strong><small>FDE / Agent / 工作流</small></div></div>
+      <div class="section-heading"><h2>值得进一步了解的机会</h2><span>资料核对于 2026.09.16</span></div>
+      <div class="toolbar"><div class="filters" id="job-filters" role="group" aria-label="办公方式筛选"><button class="chip selected" data-mode="全部" aria-pressed="true">全部机会</button><button class="chip" data-mode="远程" aria-pressed="false">支持远程</button><button class="chip" data-mode="可协商" aria-pressed="false">远程可协商</button><button class="chip" data-mode="未确认" aria-pressed="false">远程未确认</button></div><input type="search" id="job-query" aria-label="搜索岗位" placeholder="搜索公司、岗位或技能…"></div>
+      <div id="jobs-grid" class="jobs-grid"></div>
+      <div class="footnote">“支持远程”依据岗位文字，具体驻场、出差与剩余名额需向招聘方确认。新抓取的帖子进入帖子库，不会自动变成已核实岗位。<a href="/report.md" target="_blank">查看完整调研报告 ↗</a></div>
+    </section>
+    <section id="page-notes" class="page" hidden>
+      <div class="heading"><div><div class="eyebrow">SOURCE LIBRARY</div><h1>回到信息的源头<span>。</span></h1><p>查看实际采集的帖子，保留日期、搜索关键词与原始链接。</p></div><button class="secondary" id="export">↓ 导出筛选结果</button></div>
+      <div class="toolbar"><div class="filters"><label for="keyword-filter">搜索词</label><select id="keyword-filter"><option value="">全部关键词</option></select></div><input type="search" id="note-query" aria-label="搜索帖子标题" placeholder="搜索帖子标题…"></div>
+      <div class="table-card"><div class="table-caption"><strong>小红书帖子库</strong><span id="note-result-count"></span></div><div class="table-scroll"><table><thead><tr><th>帖子标题</th><th>来源关键词</th><th>发布日期</th><th>原帖</th></tr></thead><tbody id="notes-body"></tbody></table></div><div id="notes-empty" class="empty" hidden>没有找到匹配的帖子，试试其他关键词。</div></div>
+      <p class="footnote">帖子库包含经验分享、重复招聘主题与已招满信息，帖子数量不等于有效岗位数量。原帖可能需要登录小红书才能查看。</p>
+    </section>
+    <section id="page-crawl" class="page" hidden>
+      <div class="heading"><div><div class="eyebrow">SEARCH WORKBENCH</div><h1>从一个关键词开始<span>。</span></h1><p>发起小范围搜索，把新的岗位线索带回你的帖子库。</p></div></div>
+      <div class="crawl-layout"><form id="crawl-form" class="panel"><div class="panel-heading"><span class="step">01</span><h2>设置搜索</h2></div><label class="field-label">数据平台</label><div class="platforms"><div class="platform chosen"><b>小红书</b><small>已接入 · 可扫码登录</small></div><div class="platform unavailable"><b>知乎</b><small>尚未接入此网页</small></div></div><label class="field-label" for="keywords">搜索关键词</label><textarea id="keywords" rows="4" maxlength="180" required placeholder="例如：FDE 实习，AI 工作流 远程实习">FDE 实习，AI 工作流 远程实习</textarea><div class="help">每次 1–3 组，用逗号或换行分隔。</div><div class="suggestions"><button type="button" data-suggestion="FDE 远程">＋ FDE 远程</button><button type="button" data-suggestion="企业 Agent 实习">＋ 企业 Agent 实习</button><button type="button" data-suggestion="Dify 实习">＋ Dify 实习</button></div><div class="search-settings"><div><span>搜索范围</span><b>每组最多一页，约 20 篇</b></div><div><span>排序方式</span><b>最新发布优先</b></div><div><span>采集内容</span><b>帖子信息，不抓评论与媒体</b></div></div><button class="primary wide" id="start" type="submit">开始搜索 →</button><div class="help center">复用已有登录状态；每次运行最多 8 分钟。</div></form>
+      <div class="panel status-panel"><div class="panel-heading"><span class="step">02</span><h2>运行进度</h2><span id="status-badge" class="status-badge">就绪</span></div><div class="status-visual" id="status-visual">⌕</div><h3 id="status-title">等待你的下一次发现</h3><p id="status-message" aria-live="polite">设置关键词后，点击开始搜索。</p><div id="qr-box" hidden><img id="qr-image" alt="小红书登录二维码"><p>打开小红书扫码，并在手机上确认。<br>确认后任务会自动继续。</p></div><ol id="events" class="events"></ol><div class="status-actions"><button class="secondary" id="stop" type="button" hidden>停止本次任务</button><button class="secondary" id="see-results" type="button">查看帖子库 ↗</button></div></div></div>
+    </section>
+    <section id="page-xianyu" class="page" hidden>
+      <div class="heading"><div><div class="eyebrow">XIANYU · DEMAND FINDER</div><h1>找到真正需要帮助的人<span>。</span></h1><p>搜索闲鱼公开帖子，区分求助线索与接单广告，保留原文供你核对。</p></div><button class="secondary" id="xy-export">↓ 导出筛选结果</button></div>
+      <div class="crawl-layout">
+        <form id="xy-form" class="panel">
+          <div class="panel-heading"><span class="step">01</span><h2>闲鱼搜索</h2><span class="status-badge" id="xy-login">登录待检查</span></div>
+          <div class="xy-actions"><button type="button" class="secondary" id="xy-open">打开登录窗口 ↗</button><button type="button" class="secondary" id="xy-check">检查登录</button></div>
+          <p class="help">在独立的闲鱼窗口扫码登录，再回来检查。登录状态保存在这台电脑。</p>
+          <label class="field-label" for="xy-keywords">搜索关键词</label>
+          <textarea id="xy-keywords" rows="3" maxlength="600" required>PS作业求助，求剪辑作业，Illustrator求指导</textarea>
+          <div class="help">每次1–10组，用逗号或换行分隔。不要只搜“代做”，也试试“求助”“找人”。</div>
+          <div class="search-settings"><div><span>搜索范围</span><b>每组第一页 · 平台综合排序</b></div><div><span>结果处理</span><b>按帖子去重 · 需求用语初筛</b></div><div><span>运行上限</span><b>10分钟，可随时停止</b></div></div>
+          <button class="primary wide" id="xy-start" type="submit">开始闲鱼搜索 →</button>
+        </form>
+        <div class="panel status-panel">
+          <div class="panel-heading"><span class="step">02</span><h2>采集进度</h2><span class="status-badge" id="xy-status">就绪</span></div>
+          <h3 id="xy-progress">等待开始</h3><progress id="xy-progress-bar" max="1" value="0" aria-label="关键词采集进度"></progress>
+          <p id="xy-message" aria-live="polite">先检查登录状态，再开始搜索。</p>
+          <ol id="xy-events" class="events"></ol>
+          <div class="status-actions"><button type="button" class="secondary" id="xy-stop" hidden>停止采集</button><button type="button" class="secondary" id="xy-refresh">刷新结果</button></div>
+        </div>
+      </div>
+      <div class="section-heading xy-results-heading"><h2>需求线索与原始帖子</h2><span id="xy-count">正在加载…</span></div>
+      <div class="toolbar"><div class="filters"><select id="xy-category" aria-label="闲鱼结果分类"><option value="leads">需求与待核对线索</option><option value="历史已核对">历史已核对</option><option value="疑似需求">疑似需求</option><option value="待判断">待判断</option><option value="疑似广告">疑似广告</option><option value="">全部结果</option></select><select id="xy-scope" aria-label="闲鱼结果范围"><option value="">全部历史</option><option value="current">最近一次搜索</option></select></div><input id="xy-query" type="search" placeholder="搜索标题、原文或关键词…" aria-label="搜索闲鱼结果"></div>
+      <p class="footnote">历史核对只代表当时读到的内容，需求是否仍有效需查看原帖。疑似需求由规则判断，可能混入广告。搜索摘要可能截断；挂牌价不等于预算，采集时间不等于发布时间。本页不代表全站全部帖子。</p>
+      <div class="jobs-grid" id="xy-results"></div>
+      <div class="xy-actions xy-pagination"><button class="secondary" id="xy-prev">上一页</button><span id="xy-page-info"></span><button class="secondary" id="xy-next">下一页</button></div>
+    </section>
+    <footer><span>拾线 · 把线索变成下一步</span><span>本地研究工具 · 小红书 / 闲鱼</span></footer>
+  </div>
+</main><script src="/app.js"></script><script src="/xianyu.js"></script>
+</body></html>
